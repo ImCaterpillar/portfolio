@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>姚俊豪 · AI 应用 / 全栈 / 安全开发作品集</title>
+<meta name="description" content="姚俊豪（ImCaterpillar）的个人作品集：AI Agent 与大模型应用、全栈 Web/PWA、网络安全方向的工程化项目。广州大学网络空间安全专业。">
+<meta name="author" content="姚俊豪">
+<meta property="og:title" content="姚俊豪 · AI 应用 / 全栈 / 安全开发作品集">
+<meta property="og:description" content="对话式安全智能体、可复现的 AI 工程、全栈 PWA 与量化风控框架。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070b16'/%3E%3Cpath d='M16 4l9 3.5v6.2c0 5.6-3.7 9.4-9 11.3-5.3-1.9-9-5.7-9-11.3V7.5L16 4z' fill='none' stroke='%2337e4d4' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M11.5 16.2l3 3 6-6.6' fill='none' stroke='%2337e4d4' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://miaoda.feishu.cn" crossorigin>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap">
+<style>
+:root{
+  --bg:#070b16; --bg-2:#0a1120; --panel:#0d1626; --panel-2:#111d31;
+  --line:rgba(148,180,220,.13); --line-2:rgba(148,180,220,.22);
+  --txt:#e7eef9; --muted:#94a6c0; --faint:#5f7089;
+  --cyan:#37e4d4; --cyan-2:#46a7ff; --amber:#f6b352;
+  --red:#ff6f6f; --green:#43d99a; --violet:#9d8cff;
+  --grad:linear-gradient(100deg,var(--cyan),var(--cyan-2));
+  --r:14px; --r-sm:9px; --maxw:1180px;
+  --shadow:0 24px 70px -28px rgba(0,0,0,.85);
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  --disp:'Space Grotesk','Noto Sans SC',system-ui,sans-serif;
+  --sans:'Noto Sans SC','Space Grotesk',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans); color:var(--txt); background:var(--bg);
+  line-height:1.7; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(1100px 620px at 78% -8%, rgba(70,167,255,.13), transparent 60%),
+    radial-gradient(900px 560px at 8% 4%, rgba(55,228,212,.10), transparent 55%),
+    linear-gradient(180deg,#070b16,#070b16);
+}
+body::after{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5;
+  background-image:
+    linear-gradient(rgba(148,180,220,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(148,180,220,.045) 1px,transparent 1px);
+  background-size:46px 46px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 100%);
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;font-size:100%;color:inherit;background:transparent;border:none;cursor:pointer}
+img{max-width:100%;display:block}
+::selection{background:rgba(55,228,212,.28);color:#fff}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+.mono{font-family:var(--mono)}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- nav ---------- */
+header.nav{position:fixed;top:0;left:0;right:0;z-index:60;transition:.3s}
+header.nav .bar{max-width:var(--maxw);margin:0 auto;padding:14px 26px;display:flex;align-items:center;gap:22px;transition:.3s}
+header.nav.scrolled{background:rgba(7,11,22,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:700;letter-spacing:.5px}
+.logo svg{width:26px;height:26px;flex:none}
+.logo small{font-family:var(--mono);font-weight:400;color:var(--faint);font-size:11px;letter-spacing:1px}
+.nav-links{display:flex;gap:4px;margin-left:auto;align-items:center}
+.nav-links a{font-size:13.5px;color:var(--muted);padding:7px 12px;border-radius:8px;transition:.2s;font-weight:500}
+.nav-links a:hover{color:var(--txt);background:rgba(148,180,220,.08)}
+.nav-cta{border:1px solid var(--line-2);border-radius:9px!important;color:var(--cyan)!important;font-family:var(--mono);font-size:12.5px!important}
+.nav-cta:hover{background:rgba(55,228,212,.1)!important;border-color:var(--cyan)!important}
+.nav-toggle{display:none;background:none;border:1px solid var(--line-2);border-radius:8px;color:var(--txt);width:38px;height:34px;cursor:pointer;margin-left:auto}
+.nav-toggle span{display:block;width:16px;height:1.6px;background:var(--txt);margin:3px auto}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13.5px;font-weight:500;
+  padding:12px 20px;border-radius:10px;cursor:pointer;border:1px solid transparent;transition:.22s;white-space:nowrap}
+.btn svg{width:15px;height:15px}
+.btn-primary{background:var(--grad);color:#04121a;font-weight:600}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px -12px rgba(55,228,212,.5)}
+.btn-ghost{border-color:var(--line-2);color:var(--txt)}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(55,228,212,.07)}
+.btn.sm{padding:8px 13px;font-size:12.5px;border-radius:8px}
+
+/* ---------- hero ---------- */
+.hero{padding:150px 0 70px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:54px;align-items:center}
+.kicker{font-family:var(--mono);font-size:12.5px;color:var(--cyan);letter-spacing:2px;display:inline-flex;align-items:center;gap:9px;margin-bottom:22px}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(67,217,154,.15);animation:pulse 2.2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(67,217,154,0)}}
+h1.hero-name{font-family:var(--disp);font-weight:700;font-size:clamp(40px,6vw,68px);line-height:1.04;letter-spacing:-.5px}
+h1.hero-name .cn{font-family:var(--sans);font-weight:900;display:block;letter-spacing:2px}
+.hero-role{font-family:var(--mono);font-size:clamp(14px,1.7vw,17px);color:var(--muted);margin:18px 0 6px;letter-spacing:.5px}
+.hero-role b{color:var(--cyan);font-weight:500}
+.hero-p{color:var(--muted);max-width:520px;margin:18px 0 28px;font-size:15.5px}
+.hero-p strong{color:var(--txt);font-weight:500}
+.hero-actions{display:flex;gap:13px;flex-wrap:wrap;margin-bottom:34px}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.hero-stats .s{background:rgba(10,17,32,.7);padding:16px 14px}
+.hero-stats .n{font-family:var(--disp);font-size:26px;font-weight:700;color:var(--txt);line-height:1}
+.hero-stats .n em{font-style:normal;color:var(--cyan);font-size:16px}
+.hero-stats .l{font-size:12px;color:var(--faint);margin-top:7px;letter-spacing:.5px}
+
+/* hero device frame */
+.hero-visual{position:relative}
+.frame{border:1px solid var(--line-2);border-radius:16px;background:var(--panel);box-shadow:var(--shadow);overflow:hidden;position:relative}
+.frame-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(148,180,220,.06),transparent)}
+.frame-bar i{width:10px;height:10px;border-radius:50%;display:block}
+.frame-bar .r{background:#ff5f57}.frame-bar .y{background:#febc2e}.frame-bar .g{background:#28c840}
+.frame-bar .url{margin-left:10px;font-family:var(--mono);font-size:11px;color:var(--faint);background:rgba(148,180,220,.07);padding:3px 10px;border-radius:6px}
+.frame img{width:100%;height:auto}
+.hero-badge{position:absolute;left:-14px;bottom:74px;background:rgba(7,11,22,.92);border:1px solid var(--line-2);border-radius:10px;padding:10px 14px;font-family:var(--mono);font-size:11.5px;backdrop-filter:blur(8px)}
+.hero-badge .t{color:var(--green);display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.hero-badge .t::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green)}
+.hero-badge .b{color:var(--faint)}
+.hud-strip{margin-top:16px;border:1px solid var(--line);border-radius:10px;background:rgba(10,17,32,.6);padding:9px 14px;font-family:var(--mono);font-size:11.5px;color:var(--faint);display:flex;gap:16px;flex-wrap:wrap;letter-spacing:.5px}
+.hud-strip b{color:var(--cyan);font-weight:500}
+.hud-strip .warn{color:var(--amber)}
+
+/* ---------- section scaffolding ---------- */
+section{padding:84px 0;position:relative}
+.sec-head{margin-bottom:46px;max-width:720px}
+.sec-index{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:2px;display:block;margin-bottom:12px}
+.sec-head h2{font-family:var(--sans);font-weight:900;font-size:clamp(26px,3.4vw,38px);letter-spacing:1px;line-height:1.15}
+.sec-head p{color:var(--muted);margin-top:14px;font-size:15px}
+.tag{display:inline-flex;align-items:center;font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:100px;border:1px solid var(--line-2);color:var(--muted);letter-spacing:.3px}
+.tag.cyan{color:var(--cyan);border-color:rgba(55,228,212,.35);background:rgba(55,228,212,.07)}
+.tag.amber{color:var(--amber);border-color:rgba(246,179,82,.35);background:rgba(246,179,82,.07)}
+.tag.violet{color:var(--violet);border-color:rgba(157,140,255,.35);background:rgba(157,140,255,.08)}
+
+/* ---------- featured cases ---------- */
+.case{display:grid;grid-template-columns:1.06fr .94fr;gap:44px;align-items:center;margin-bottom:96px}
+.case:nth-child(even) .case-visual{order:2}
+.case-num{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:2px;margin-bottom:10px}
+.case h3{font-family:var(--sans);font-weight:900;font-size:clamp(22px,2.4vw,29px);letter-spacing:.5px;line-height:1.25}
+.case h3 .en{display:block;font-family:var(--disp);font-weight:600;font-size:13px;color:var(--cyan);letter-spacing:1.5px;margin-top:5px;text-transform:uppercase}
+.case-tags{display:flex;gap:7px;flex-wrap:wrap;margin:15px 0 18px}
+.case p.lead{color:var(--muted);font-size:14.5px;margin-bottom:14px}
+.decisions{list-style:none;margin:6px 0 20px;display:flex;flex-direction:column;gap:11px}
+.decisions li{position:relative;padding-left:26px;font-size:13.8px;color:#c4d1e4;line-height:1.62}
+.decisions li::before{content:"";position:absolute;left:2px;top:9px;width:9px;height:9px;border:1.5px solid var(--cyan);border-radius:2px;transform:rotate(45deg)}
+.decisions li b{color:var(--txt);font-weight:600}
+.metrics{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.metric{font-family:var(--mono);font-size:11.5px;color:var(--muted);border:1px solid var(--line);background:rgba(148,180,220,.04);padding:5px 10px;border-radius:7px}
+.metric b{color:var(--cyan);font-weight:600}
+.case-links{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.extlink{font-family:var(--mono);font-size:12.5px;color:var(--cyan);display:inline-flex;gap:7px;align-items:center;border:1px solid rgba(55,228,212,.3);padding:8px 13px;border-radius:8px;transition:.2s;cursor:pointer;background:none}
+.extlink:hover{background:rgba(55,228,212,.1)}
+.extlink svg{width:13px;height:13px}
+.extlink.muted{color:var(--faint);border-color:var(--line-2);cursor:default;background:none}
+.extlink:not(.muted){}
+.case-visual .frame{transition:transform .4s ease,box-shadow .4s}
+.case-visual .frame:hover{transform:translateY(-4px)}
+.case-visual .cap{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:10px;display:flex;justify-content:space-between;gap:10px}
+.case-visual .cap .zoom{color:var(--cyan);cursor:pointer}
+.gallery-thumbs{display:flex;gap:8px;margin-top:11px}
+.gallery-thumbs img{width:64px;height:44px;object-fit:cover;border-radius:6px;border:1px solid var(--line-2);cursor:pointer;opacity:.72;transition:.2s}
+.gallery-thumbs img:hover,.gallery-thumbs img.on{opacity:1;border-color:var(--cyan)}
+
+/* inline architecture svg panels */
+.arch{border:1px solid var(--line-2);border-radius:var(--r);background:
+  radial-gradient(600px 300px at 80% 0,rgba(70,167,255,.08),transparent 60%),var(--panel);padding:26px 22px;min-height:300px;display:flex;flex-direction:column;justify-content:center}
+.arch svg{width:100%;height:auto}
+.arch .alabel{font-family:var(--mono);font-size:10px;fill:var(--faint);letter-spacing:1px}
+.arch .anode{fill:#0e1a2e;stroke:rgba(70,167,255,.45);stroke-width:1}
+.arch .anode2{fill:#102033;stroke:rgba(55,228,212,.5)}
+.arch .anodet{font-family:var(--mono);font-size:11px;fill:#cfe0f4;text-anchor:middle}
+.arch .anodes{font-family:var(--mono);font-size:9px;fill:var(--faint);text-anchor:middle}
+.arch .flow{stroke:var(--cyan);stroke-width:1.4;fill:none;marker-end:url(#arw)}
+.arch .flow2{stroke:var(--cyan-2);stroke-width:1.2;fill:none;stroke-dasharray:4 4;marker-end:url(#arwb)}
+.arch-caption{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:14px;text-align:center;letter-spacing:.5px}
+
+/* ---------- more grid ---------- */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.filters button{font-family:var(--mono);font-size:12.5px;color:var(--muted);background:none;border:1px solid var(--line-2);padding:7px 15px;border-radius:100px;cursor:pointer;transition:.2s}
+.filters button:hover{color:var(--txt);border-color:var(--cyan)}
+.filters button.on{color:#04121a;background:var(--grad);border-color:transparent;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.pcard{border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg,rgba(17,29,49,.6),rgba(13,22,38,.6));padding:22px;display:flex;flex-direction:column;transition:.25s;position:relative;overflow:hidden}
+.pcard::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);opacity:0;transition:.25s}
+.pcard:hover{border-color:var(--line-2);transform:translateY(-4px);box-shadow:0 20px 50px -30px rgba(0,0,0,.9)}
+.pcard:hover::before{opacity:1}
+.pcard .ico{width:38px;height:38px;border-radius:10px;border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;margin-bottom:15px;color:var(--cyan);background:rgba(55,228,212,.06)}
+.pcard .ico svg{width:19px;height:19px}
+.pcard h4{font-size:16px;font-weight:700;letter-spacing:.3px}
+.pcard .en4{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:2px;letter-spacing:.5px}
+.pcard p{font-size:13px;color:var(--muted);margin:11px 0 14px;flex:1}
+.pcard .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pcard .chips span{font-family:var(--mono);font-size:10px;color:var(--faint);border:1px solid var(--line);padding:2px 7px;border-radius:5px}
+.pcard .plink{font-family:var(--mono);font-size:12px;color:var(--cyan);display:inline-flex;gap:6px;align-items:center}
+.pcard .plink svg{width:12px;height:12px}
+.pcard .plink.none{color:var(--faint);cursor:default}
+
+/* ---------- stack ---------- */
+.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.sgroup{border:1px solid var(--line);border-radius:var(--r);padding:22px;background:rgba(13,22,38,.5)}
+.sgroup h4{font-size:15px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:9px}
+.sgroup h4 svg{width:17px;height:17px;color:var(--cyan)}
+.sgroup .lvl{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-bottom:15px;letter-spacing:.5px}
+.chip-cloud{display:flex;flex-wrap:wrap;gap:8px}
+.chip-cloud span{font-size:12.5px;padding:5px 11px;border-radius:8px;border:1px solid var(--line-2);background:rgba(148,180,220,.05);color:#cdd9ea}
+.chip-cloud span.hot{border-color:rgba(55,228,212,.4);color:var(--cyan);background:rgba(55,228,212,.07)}
+
+/* ---------- approach ---------- */
+.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.principle{border:1px solid var(--line);border-radius:var(--r);padding:24px;background:linear-gradient(180deg,rgba(17,29,49,.55),rgba(13,22,38,.4));position:relative}
+.principle .pn{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:1.5px}
+.principle .pi{width:34px;height:34px;margin:12px 0 14px;color:var(--cyan)}
+.principle .pi svg{width:100%;height:100%}
+.principle h4{font-size:16px;font-weight:700;margin-bottom:9px}
+.principle p{font-size:13.3px;color:var(--muted);line-height:1.65}
+
+/* ---------- about / timeline ---------- */
+.about-grid{display:grid;grid-template-columns:.86fr 1.14fr;gap:48px;align-items:start}
+.about-card{border:1px solid var(--line-2);border-radius:var(--r);padding:28px;background:linear-gradient(180deg,rgba(17,29,49,.6),rgba(13,22,38,.5));position:sticky;top:96px}
+.about-card h3{font-size:20px;font-weight:900;letter-spacing:.5px;margin-bottom:4px}
+.about-card .role{font-family:var(--mono);font-size:12px;color:var(--cyan);margin-bottom:18px}
+.about-card p{font-size:14px;color:var(--muted);margin-bottom:14px}
+.about-card .kv{display:flex;justify-content:space-between;font-size:13px;padding:9px 0;border-top:1px solid var(--line);color:var(--muted)}
+.about-card .kv b{color:var(--txt);font-weight:500;text-align:right}
+.timeline{position:relative;padding-left:6px}
+.tl-item{display:grid;grid-template-columns:96px 26px 1fr;gap:0 16px;padding-bottom:30px;position:relative}
+.tl-item:last-child{padding-bottom:0}
+.tl-when{font-family:var(--mono);font-size:12px;color:var(--cyan);padding-top:2px;text-align:right}
+.tl-axis{position:relative;justify-self:center;width:2px;background:var(--line-2)}
+.tl-item:last-child .tl-axis{background:linear-gradient(180deg,var(--line-2),transparent)}
+.tl-dot{position:absolute;top:5px;left:50%;transform:translateX(-50%);width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);z-index:1}
+.tl-item.now .tl-dot{background:var(--cyan);box-shadow:0 0 0 4px rgba(55,228,212,.18)}
+.tl-body h4{font-size:15.5px;font-weight:700;margin-bottom:4px}
+.tl-body p{font-size:13.3px;color:var(--muted);line-height:1.6}
+
+/* ---------- contact ---------- */
+.contact{text-align:center;max-width:760px;margin:0 auto}
+.contact h2{font-family:var(--sans);font-weight:900;font-size:clamp(28px,4vw,44px);letter-spacing:1px;line-height:1.2}
+.contact p{color:var(--muted);margin:18px auto 30px;max-width:560px;font-size:15px}
+.contact-actions{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+.contact-meta{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.contact-meta a{display:inline-flex;gap:8px;align-items:center;transition:.2s}
+.contact-meta a:hover{color:var(--cyan)}
+.contact-meta svg{width:15px;height:15px}
+.copy-mail{cursor:pointer}
+
+/* ---------- footer ---------- */
+.footer{border-top:1px solid var(--line);padding:34px 0;margin-top:40px}
+.footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+.footer .fl{font-family:var(--mono);font-size:11.5px;color:var(--faint);max-width:640px;line-height:1.7}
+.footer .fr{font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+
+/* ---------- modal / lightbox ---------- */
+.overlay{position:fixed;inset:0;z-index:100;background:rgba(4,8,16,.82);backdrop-filter:blur(7px);display:none;align-items:flex-start;justify-content:center;padding:5vh 18px;overflow-y:auto}
+.overlay.open{display:flex}
+.modal{width:min(860px,100%);background:var(--panel);border:1px solid var(--line-2);border-radius:16px;overflow:hidden;margin:auto 0;box-shadow:0 40px 120px -30px #000}
+.modal-bar{display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid var(--line)}
+.modal-bar .mt{font-family:var(--mono);font-size:12px;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.modal-close{background:none;border:1px solid var(--line-2);color:var(--muted);width:34px;height:34px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.modal-close svg{width:14px;height:14px}
+.modal-close:hover{color:var(--txt);border-color:var(--cyan)}
+.modal-body{padding:24px 26px 30px}
+.modal-body h3{font-size:23px;font-weight:900;margin-bottom:4px}
+.modal-body .en{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:1px;margin-bottom:16px;display:block}
+.modal-body h5{font-size:13.5px;font-weight:700;margin:20px 0 9px;color:var(--txt);display:flex;align-items:center;gap:8px}
+.modal-body h5::before{content:"";width:14px;height:2px;background:var(--cyan)}
+.modal-body p,.modal-body li{font-size:13.8px;color:#c2cfe2;line-height:1.72}
+.modal-body ul{padding-left:18px;display:flex;flex-direction:column;gap:7px}
+.modal-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:16px 0}
+.modal-gallery img{width:100%;border-radius:9px;border:1px solid var(--line-2);cursor:zoom-in;transition:.2s}
+.modal-gallery img:hover{border-color:var(--cyan)}
+.modal-gallery img.one{grid-column:1/-1}
+.modal-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.lightbox{position:fixed;inset:0;z-index:120;background:rgba(3,6,12,.94);display:none;align-items:center;justify-content:center;padding:30px;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:96vw;max-height:92vh;border-radius:10px;border:1px solid var(--line-2)}
+.lightbox .lb-cap{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+/* toast */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel-2);border:1px solid var(--cyan);color:var(--txt);padding:11px 20px;border-radius:10px;font-size:13px;z-index:200;opacity:0;pointer-events:none;transition:.3s;font-family:var(--mono)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero{padding:128px 0 50px}
+  .hero-visual{max-width:640px}
+  .case{grid-template-columns:1fr;gap:26px;margin-bottom:70px}
+  .case:nth-child(even) .case-visual{order:0}
+  .grid,.stack-grid,.principles{grid-template-columns:repeat(2,1fr)}
+  .about-grid{grid-template-columns:1fr;gap:30px}
+  .about-card{position:static}
+}
+@media(max-width:680px){
+  .nav-links{position:fixed;inset:58px 12px auto 12px;flex-direction:column;align-items:stretch;gap:2px;background:rgba(9,14,26,.97);border:1px solid var(--line-2);border-radius:14px;padding:10px;display:none;backdrop-filter:blur(16px)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 14px;min-height:44px;display:flex;align-items:center}
+  .nav-toggle{display:block;min-width:42px;min-height:42px}
+  .grid,.stack-grid,.principles{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .modal-gallery{grid-template-columns:1fr}
+  .tl-item{grid-template-columns:74px 22px 1fr}
+  section{padding:62px 0}
+  .hero-visual{position:static}
+  .hero-badge{position:static;left:auto;bottom:auto;margin:12px 0 0}
+  .hud-strip{margin-top:12px}
+  .filters button{min-height:42px;padding:9px 16px}
+  .extlink{min-height:42px}
+  .btn{min-height:46px}
+  .case{margin-bottom:56px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .kicker .dot{animation:none}
+  *{animation-duration:.001s!important}
+}
+/*@@NEXT@@*/
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="bar">
+    <a class="logo" href="#top" aria-label="返回首页">
+      <svg viewBox="0 0 32 32"><path d="M16 3l10 3.8v6.9c0 6.2-4.1 10.4-10 12.5C10.1 24.1 6 19.9 6 13.7V6.8L16 3z" fill="none" stroke="#37e4d4" stroke-width="1.7" stroke-linejoin="round"/><path d="M11.4 16.3l3.1 3.1L21 12" fill="none" stroke="#37e4d4" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>姚俊豪<small> / ImCaterpillar</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#work">精选案例</a>
+      <a href="#more">全部项目</a>
+      <a href="#stack">技术栈</a>
+      <a href="#approach">工程方法</a>
+      <a href="#about">关于</a>
+      <a class="nav-cta" href="https://github.com/ImCaterpillar" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="kicker"><span class="dot"></span>开放求职机会 · AI 应用 / 全栈 / 安全开发 · 广州</span>
+      <h1 class="hero-name"><span class="cn">姚俊豪</span>Yao&nbsp;Junhao</h1>
+      <p class="hero-role">我把 <b>大模型</b> 做成能落地的产品：<b>AI Agent</b> · 全栈 Web/PWA · <b>网络安全</b></p>
+      <p class="hero-p">广州大学<strong>网络空间安全</strong>专业，24 个从 0 到 1 的自研项目。擅长把 LLM、安全工程与现代 Web 技术串成<strong>真实可用、可复现、可测试</strong>的完整系统——从对话式安全智能体，到自己每天在用的训练与学习系统。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#work">查看精选案例
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/ImCaterpillar" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5z"/></svg>
+          GitHub
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="s"><div class="n">24</div><div class="l">自研项目</div></div>
+        <div class="s"><div class="n">6<em></em></div><div class="l">精选案例</div></div>
+        <div class="s"><div class="n">3</div><div class="l">主攻方向</div></div>
+        <div class="s"><div class="n">10</div><div class="l">公开仓库</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="frame" id="heroFrame">
+        <div class="frame-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">systemwire · 内网安全智能体平台 / 02 蜜点部署</span></div>
+        <img src="assets/img/sw-approval.webp" alt="SYSTEMWIRE 蜜点部署的人工授权（HITL）界面" loading="eager">
+      </div>
+      <div class="hero-badge">
+        <div class="t">AGENT READY · 离线可复现</div>
+        <div class="b">确定性演示引擎 · 断网也能跑</div>
+      </div>
+      <div class="hud-strip">
+        <span><b>12</b> 资产</span><span><b>2</b> 高危</span><span class="warn">等待授权</span><span>MITRE ATT&amp;CK</span><span>HITL</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="work">
+  <div class="wrap">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+      <marker id="gArw" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#37e4d4"/></marker>
+      <marker id="gArwb" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 z" fill="#46a7ff"/></marker>
+    </defs></svg>
+
+    <div class="sec-head reveal">
+      <span class="sec-index">SELECTED WORK / 01</span>
+      <h2>六个能讲清「问题—决策—结果」的案例</h2>
+      <p>不堆半成品。每个项目都解决过一个真实问题，下面重点呈现我做的技术取舍与可验证的结果；点开卡片可看完整案例复盘与截图。</p>
+    </div>
+
+    <!-- CASE 1 SYSTEMWIRE -->
+    <article class="case reveal">
+      <div class="case-visual">
+        <div class="frame">
+          <div class="frame-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">systemwire / threat-attribution</span></div>
+          <img src="assets/img/sw-attribution.webp" alt="SYSTEMWIRE 威胁归因：蜜点告警卡与 MITRE ATT&CK 溯源图谱" loading="lazy">
+        </div>
+        <div class="cap"><span>SYSTEMWIRE · 三栏 SOC 控制台（真实运行截图）</span><span class="zoom" data-case="systemwire">查看 5 张截图</span></div>
+        <div class="gallery-thumbs">
+          <img class="on" src="assets/img/sw-attribution.webp" alt="威胁归因" data-full="assets/img/sw-attribution.webp">
+          <img src="assets/img/sw-asset-report.webp" alt="内网体检" data-full="assets/img/sw-asset-report.webp">
+          <img src="assets/img/sw-approval.webp" alt="人工授权" data-full="assets/img/sw-approval.webp">
+          <img src="assets/img/sw-confidence.webp" alt="置信度研判" data-full="assets/img/sw-confidence.webp">
+          <img src="assets/img/sw-topology.webp" alt="资产拓扑" data-full="assets/img/sw-topology.webp">
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-num">CASE 01 · 招牌项目</div>
+        <h3>SYSTEMWIRE 内网安全智能体平台<span class="en">Conversational AI Security Agent · Human-in-the-loop</span></h3>
+        <div class="case-tags"><span class="tag cyan">AI Agent</span><span class="tag">网络安全</span><span class="tag">Next.js 15 / React 19</span><span class="tag violet">CopilotKit</span></div>
+        <p class="lead">对话式 Agent 不能只停留在"能聊天"。我做了一个对话驱动的三栏 SOC 控制台，把<b style="color:var(--txt)">内网体检、蜜点部署、威胁归因</b>做成可审计、可离线复现的人机协同流程。</p>
+        <ul class="decisions">
+          <li><b>确定性演示引擎：</b>拦截 OpenAI 兼容接口，用状态机 + SSE 流式编排脚本，断网 100% 可复现；真实 DeepSeek 失败自动回退，演示永不中断。</li>
+          <li><b>高风险动作必须授权：</b>部署/卸载蜜点走 HITL 授权卡（终端命令、利弊、影响评估、端口冲突四方案），Agent 不能自行执行。</li>
+          <li><b>MITRE 杀伤链研判：</b>蜜点告警逐层回溯 L1–L4，给出 ATT&CK 技术编号、四因子置信度与证据时间线，AI 只说结论、明细交给 Artifact。</li>
+        </ul>
+        <div class="metrics">
+          <span class="metric"><b>3</b> 运营场景</span><span class="metric"><b>12</b> 资产 / <b>9</b> 告警</span>
+          <span class="metric"><b>50</b> Vitest 用例</span><span class="metric"><b>10</b> 条路由</span><span class="metric">tsc 类型门</span>
+        </div>
+        <div class="case-links">
+          <a class="extlink" href="https://github.com/ImCaterpillar/systemwire" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5z"/></svg>源码仓库</a>
+          <button class="extlink" data-case="systemwire">案例复盘<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 2 HALF MARATHON -->
+    <article class="case reveal">
+      <div class="case-visual">
+        <div class="arch">
+          <svg viewBox="0 0 480 300" role="img" aria-label="半程马拉松训练系统架构图">
+            <rect class="anode2" x="40" y="26" width="160" height="50" rx="9"/><text class="anodet" x="120" y="47">PWA 移动端</text><text class="anodes" x="120" y="64">Service Worker · 可安装</text>
+            <rect class="anode" x="165" y="124" width="150" height="56" rx="9"/><text class="anodet" x="240" y="147">Next.js API 服务端</text><text class="anodes" x="240" y="164">密钥不进浏览器 · 限流</text>
+            <rect class="anode" x="310" y="26" width="140" height="50" rx="9"/><text class="anodet" x="380" y="47">AI 训练建议</text><text class="anodes" x="380" y="64">服务端抽象 · 确认后应用</text>
+            <rect class="anode" x="310" y="220" width="140" height="52" rx="9"/><text class="anodet" x="380" y="242">Supabase / Postgres</text><text class="anodes" x="380" y="259">RPC 事务 · 版本备份回滚</text>
+            <rect class="anode2" x="40" y="220" width="160" height="52" rx="9"/><text class="anodet" x="120" y="242">IndexedDB 离线队列</text><text class="anodes" x="120" y="259">断网暂存 · 联网补传</text>
+            <path class="flow" d="M150 76 C150 110 200 110 215 124"/>
+            <path class="flow2" d="M330 76 C320 110 300 112 300 124"/>
+            <path class="flow" d="M300 168 C320 200 350 208 368 220"/>
+            <path class="flow" d="M150 220 C170 196 196 188 200 180"/>
+          </svg>
+          <div class="arch-caption">密钥隔离 · 离线优先 · 事务化的个人训练数据底座</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-num">CASE 02 · 自用产品</div>
+        <h3>半程马拉松训练管理 Web App<span class="en">Half-Marathon Training OS · dogfooded PWA</span></h3>
+        <div class="case-tags"><span class="tag cyan">全栈</span><span class="tag">Next.js / TypeScript</span><span class="tag">Supabase</span><span class="tag">PWA</span></div>
+        <p class="lead">为冲击男子半马国家三级（1:21:30）给自己做的训练系统：真实打卡、真实统计、真实 AI 建议，而不是一次性 demo。</p>
+        <ul class="decisions">
+          <li><b>密钥零暴露：</b>浏览器不直连 Supabase，Service Role Key 与 AI Key 只在服务端；HttpOnly Cookie + 访问码限流。</li>
+          <li><b>AI 建议可回滚：</b>建议只暂存，确认后才应用；应用前自动建 plan_versions 备份，失败由 Postgres RPC 事务整体回滚。</li>
+          <li><b>离线优先 PWA：</b>Service Worker + IndexedDB 打卡队列，跨端可安装；bat/cmd/ps1/sh 一键本地运行。</li>
+        </ul>
+        <div class="metrics"><span class="metric"><b>12</b> 张表</span><span class="metric"><b>7</b> 阶段 + <b>12</b> 周计划</span><span class="metric"><b>5</b> Checkpoint</span><span class="metric">Vitest + Playwright</span></div>
+        <div class="case-links">
+          <a class="extlink" href="https://github.com/ImCaterpillar/half-marathon-training" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5z"/></svg>源码仓库</a>
+          <button class="extlink" data-case="halfmarathon">案例复盘<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 3 ALGOSTUDY -->
+    <article class="case reveal">
+      <div class="case-visual">
+        <div class="arch">
+          <svg viewBox="0 0 480 300" role="img" aria-label="AlgoStudy 算法学习平台架构图">
+            <rect class="anode2" x="26" y="34" width="150" height="52" rx="9"/><text class="anodet" x="101" y="56">React + Vite</text><text class="anodes" x="101" y="73">Monaco 编辑器 · Recharts</text>
+            <rect class="anode" x="165" y="124" width="150" height="56" rx="9"/><text class="anodet" x="240" y="147">FastAPI</text><text class="anodes" x="240" y="164">JWT 鉴权 · SQLAlchemy</text>
+            <rect class="anode" x="312" y="34" width="140" height="52" rx="9"/><text class="anodet" x="382" y="56">SQLite</text><text class="anodes" x="382" y="73">自动迁移 · 本地零配置</text>
+            <rect class="anode2" x="312" y="130" width="140" height="56" rx="9"/><text class="anodet" x="382" y="152">浏览器代码沙箱</text><text class="anodes" x="382" y="169">Py / JS / Java / C++</text>
+            <rect class="anode" x="60" y="222" width="360" height="50" rx="9"/><text class="anodet" x="240" y="244">间隔复习闭环 D+1 / 3 / 7 / 14 / 30</text><text class="anodes" x="240" y="261">掌握度 · 弱项标签 · 每日推荐 · 周报 · AI 提示与代码审查</text>
+            <path class="flow" d="M150 60 C170 80 180 110 196 124"/>
+            <path class="flow" d="M300 140 C308 120 320 96 338 86"/>
+            <path class="flow2" d="M382 186 L382 222"/>
+            <path class="flow" d="M240 180 L240 222"/>
+          </svg>
+          <div class="arch-caption">做题 → 复盘 → 间隔复习 → 弱项消灭，数据驱动的学习闭环</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-num">CASE 03 · 全栈 + AI 教育</div>
+        <h3>AlgoStudy 算法学习平台<span class="en">AlgoStudy · spaced-repetition coding platform</span></h3>
+        <div class="case-tags"><span class="tag cyan">全栈</span><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag violet">AI 提示 / 审查</span></div>
+        <p class="lead">刷题不是越多越好。我做了一个把"做题—复盘—间隔复习—弱项消灭"串成闭环的平台，而不是又一个题库。</p>
+        <ul class="decisions">
+          <li><b>浏览器内多语言沙箱：</b>Python/JS/Java/C++ 直接在页面运行，记录提交与错因，不依赖远程判题机。</li>
+          <li><b>间隔重复 + 掌握度：</b>D+1/3/7/14/30 复习节奏、弱项标签、每日推荐与周报，让复习由数据驱动。</li>
+          <li><b>零配置可跑 + CI：</b>SQLite 本地启动，旧库自动迁移并保护外键/唯一性；GitHub Actions 持续把关。</li>
+        </ul>
+        <div class="metrics"><span class="metric">JWT 鉴权</span><span class="metric">Monaco + Recharts</span><span class="metric">自动迁移</span><span class="metric"><b>CI</b> GitHub Actions</span></div>
+        <div class="case-links">
+          <a class="extlink" href="https://github.com/ImCaterpillar/algo-study" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5z"/></svg>源码仓库</a>
+          <button class="extlink" data-case="algostudy">案例复盘<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </article>
+    <!-- CASE 4 RISKFORGE -->
+    <article class="case reveal">
+      <div class="case-visual">
+        <div class="arch">
+          <svg viewBox="0 0 480 300" role="img" aria-label="RiskForge 事件驱动回测流水线">
+            <rect class="anode2" x="14" y="92" width="86" height="58" rx="9"/><text class="anodet" x="57" y="117">DataFeed</text><text class="anodes" x="57" y="134">合成 GBM/CSV</text>
+            <rect class="anode" x="112" y="92" width="86" height="58" rx="9"/><text class="anodet" x="155" y="117">数据校验</text><text class="anodes" x="155" y="134">OHLC·缺口·复权</text>
+            <rect class="anode" x="210" y="92" width="96" height="58" rx="9"/><text class="anodet" x="258" y="117">Event Engine</text><text class="anodes" x="258" y="134">Strategy·Broker</text>
+            <rect class="anode2" x="318" y="92" width="68" height="58" rx="9"/><text class="anodet" x="352" y="117">风控</text><text class="anodes" x="352" y="134">仓位·回撤</text>
+            <rect class="anode" x="398" y="92" width="68" height="58" rx="9"/><text class="anodet" x="432" y="117">绩效报告</text><text class="anodes" x="432" y="134">指标·图表</text>
+            <path class="flow" d="M100 121 L112 121"/><path class="flow" d="M198 121 L210 121"/><path class="flow" d="M306 121 L318 121"/><path class="flow" d="M386 121 L398 121"/>
+            <rect class="anode" x="60" y="210" width="360" height="52" rx="9"/><text class="anodet" x="240" y="232">核心零第三方依赖（仅 Python 标准库）</text><text class="anodes" x="240" y="250">显式 seed 同输入同结果 · 后复权因子 · src/tests/docs 标准工程</text>
+            <path class="flow2" d="M240 210 L240 150"/>
+          </svg>
+          <div class="arch-caption">可复现、可离线、口径一致的个人量化研究底座</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-num">CASE 04 · 工程化 / 架构</div>
+        <h3>RiskForge 事件驱动量化回测与风险框架<span class="en">RiskForge · reproducible event-driven backtester</span></h3>
+        <div class="case-tags"><span class="tag cyan">Python</span><span class="tag">事件驱动架构</span><span class="tag">量化风控</span><span class="tag">零三方依赖</span></div>
+        <p class="lead">想要一个不依赖在线行情、不依赖重型框架、口径一致的个人量化研究底座——重点是工程严谨，而不是收益曲线。</p>
+        <ul class="decisions">
+          <li><b>核心零三方依赖：</b>仅用标准库，隔离/无网络也能安装、运行、测试；只有出图才可选 matplotlib。</li>
+          <li><b>一切随机显式 seed：</b>同输入必得同结果；数据先校验（OHLC、日期、缺口、复权）再进引擎。</li>
+          <li><b>复权口径正确：</b>拆股/分通用后复权因子，复权收益=含权总收益，除权日不产生人为跳空。</li>
+        </ul>
+        <div class="metrics"><span class="metric">src/tests/examples/docs</span><span class="metric">CLI</span><span class="metric">unittest</span><span class="metric">合成数据·非投资建议</span></div>
+        <div class="case-links">
+          <a class="extlink" href="https://github.com/ImCaterpillar/riskforge" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5z"/></svg>源码仓库</a>
+          <button class="extlink" data-case="riskforge">案例复盘<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 5 GRADUATION -->
+    <article class="case reveal">
+      <div class="case-visual">
+        <div class="arch">
+          <svg viewBox="0 0 480 300" role="img" aria-label="网安科普大模型问答系统架构图">
+            <rect class="anode2" x="18" y="26" width="132" height="48" rx="9"/><text class="anodet" x="84" y="48">wiseflow 采集</text><text class="anodes" x="84" y="65">网安科普信息汇聚</text>
+            <rect class="anode" x="174" y="26" width="132" height="48" rx="9"/><text class="anodet" x="240" y="48">知识库 + RAG</text><text class="anodes" x="240" y="65">检索增强回答</text>
+            <rect class="anode2" x="18" y="150" width="132" height="48" rx="9"/><text class="anodet" x="84" y="172">SecGPT 安全大模型</text><text class="anodes" x="84" y="189">领域基座</text>
+            <rect class="anode" x="174" y="150" width="132" height="48" rx="9"/><text class="anodet" x="240" y="172">LLaMA-Factory 微调</text><text class="anodes" x="240" y="189">secgpt-mini</text>
+            <rect class="anode2" x="330" y="88" width="132" height="52" rx="9"/><text class="anodet" x="396" y="110">领域问答模型</text><text class="anodes" x="396" y="127">网安科普问答</text>
+            <rect class="anode" x="330" y="196" width="132" height="48" rx="9"/><text class="anodet" x="396" y="218">FastAPI + Gradio</text><text class="anodes" x="396" y="235">可演示 Web</text>
+            <rect class="anode" x="174" y="232" width="132" height="40" rx="9"/><text class="anodet" x="240" y="257">PocketBase 数据层</text>
+            <path class="flow" d="M150 50 L174 50"/>
+            <path class="flow" d="M306 56 C330 64 344 78 360 92"/>
+            <path class="flow" d="M150 174 L174 174"/>
+            <path class="flow" d="M306 168 C330 156 344 138 360 124"/>
+            <path class="flow" d="M396 140 L396 196"/>
+          </svg>
+          <div class="arch-caption">数据采集 → 领域微调 → 检索增强 → Web 演示的完整毕设链路</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-num">CASE 05 · 本科毕业设计</div>
+        <h3>基于大模型的网络安全科普问答系统<span class="en">Capstone · LLM fine-tune + RAG for cybersecurity</span></h3>
+        <div class="case-tags"><span class="tag violet">LLM 微调</span><span class="tag cyan">RAG</span><span class="tag">网络安全</span><span class="tag">FastAPI / Gradio</span></div>
+        <p class="lead">通用大模型答网络安全问题容易泛泛而谈。毕设里我用安全领域大模型 + 持续知识采集，做了一个"懂安全"的科普问答系统，并独立走完全链路与论文答辩。</p>
+        <ul class="decisions">
+          <li><b>领域微调：</b>以开源 SecGPT 为基座，用 LLaMA-Factory 训练 secgpt-mini，让回答贴合网安科普语境。</li>
+          <li><b>采集 + RAG：</b>wiseflow 持续汇聚资料构建知识库，检索增强生成，减少幻觉、可溯源。</li>
+          <li><b>可演示闭环：</b>FastAPI + Gradio 提供前后端，PocketBase 做轻量数据层；含开题/中期/论文/答辩全套材料。</li>
+        </ul>
+        <div class="metrics"><span class="metric">SecGPT / secgpt-mini</span><span class="metric">LLaMA-Factory</span><span class="metric">wiseflow</span><span class="metric">论文 + 答辩</span></div>
+        <div class="case-links">
+          <span class="extlink muted">源码与论文整理中（含模型权重，体积较大）</span>
+          <button class="extlink" data-case="graduation">案例复盘<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 6 ALGO VIDEO -->
+    <article class="case reveal">
+      <div class="case-visual">
+        <div class="arch">
+          <svg viewBox="0 0 480 300" role="img" aria-label="算法视频工坊流水线">
+            <rect class="anode2" x="12" y="70" width="74" height="56" rx="9"/><text class="anodet" x="49" y="95">选题题单</text><text class="anodes" x="49" y="112">数据驱动</text>
+            <rect class="anode" x="98" y="70" width="74" height="56" rx="9"/><text class="anodet" x="135" y="95">任务队列</text><text class="anodes" x="135" y="112">发布计划</text>
+            <rect class="anode" x="184" y="52" width="120" height="92" rx="9"/><text class="anodet" x="244" y="86">一体化 worker</text><text class="anodes" x="244" y="104">脚本 · Playwright 录屏</text><text class="anodes" x="244" y="120">TTS · 字幕 · 模板</text>
+            <rect class="anode2" x="316" y="70" width="70" height="56" rx="9"/><text class="anodet" x="351" y="95">渲染合成</text><text class="anodes" x="351" y="112">多模态</text>
+            <rect class="anode" x="398" y="70" width="70" height="56" rx="9"/><text class="anodet" x="433" y="95">成片产出</text><text class="anodes" x="433" y="112">打包 ZIP</text>
+            <path class="flow" d="M86 98 L98 98"/><path class="flow" d="M172 98 L184 98"/><path class="flow" d="M304 98 L316 98"/><path class="flow" d="M386 98 L398 98"/>
+            <rect class="anode" x="44" y="200" width="180" height="52" rx="9"/><text class="anodet" x="134" y="222">未配置 Key 自动 mock</text><text class="anodes" x="134" y="240">先让系统端到端跑通</text>
+            <rect class="anode" x="256" y="200" width="180" height="52" rx="9"/><text class="anodet" x="346" y="222">本地工作区中心</text><text class="anodes" x="346" y="240">备份 · 孤儿检测 · 过期清理</text>
+          </svg>
+          <div class="arch-caption">从选题到成片的多模态自动化流水线（迭代至 v48）</div>
+        </div>
+      </div>
+      <div class="case-body">
+        <div class="case-num">CASE 06 · AI 内容工程</div>
+        <h3>算法视频工坊<span class="en">Algo Video Studio · multimodal production pipeline</span></h3>
+        <div class="case-tags"><span class="tag cyan">Python / Flask</span><span class="tag">Playwright</span><span class="tag violet">多模态</span><span class="tag">任务队列</span></div>
+        <p class="lead">把"算法题讲解"从选题、脚本、录屏、配音、字幕到发布做成一条可复用、可离线演示、可重放的自动化生产线。</p>
+        <ul class="decisions">
+          <li><b>长流程解耦：</b>任务队列 + 发布计划 + 资产/模板中心 + 规则引擎，一体化 worker 串起录屏、TTS、字幕与渲染。</li>
+          <li><b>无 Key 也能跑：</b>未配置 OPENAI_API_KEY 时自动走 mock/本地演示，先保证端到端可用（与 SYSTEMWIRE 同一理念）。</li>
+          <li><b>工作区可运维：</b>一键备份、孤儿目录检测、过期清理、成果打包；start.bat 一键启动，迭代到 v48。</li>
+        </ul>
+        <div class="metrics"><span class="metric"><b>v1→v48</b> 迭代</span><span class="metric">一体化 worker</span><span class="metric">Web 后台</span><span class="metric">巡检 / 备份</span></div>
+        <div class="case-links">
+          <span class="extlink muted">源码整理中（含运行产物，需脱敏后发布）</span>
+          <button class="extlink" data-case="algovideo">案例复盘<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+<section id="more" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-index">MORE PROJECTS / 02</span>
+      <h2>更多项目：覆盖面与学习轨迹</h2>
+      <p>除了六个主打案例，下面是小程序、移动端、安全实验与游戏方向的实践。带链接的可直接访问，其余为本地自研项目（可按需提供源码）。</p>
+    </div>
+    <div class="filters reveal" id="filters">
+      <button class="on" data-f="all">全部</button>
+      <button data-f="ai">AI / Agent</button>
+      <button data-f="web">全栈 Web</button>
+      <button data-f="mobile">移动端 / 小程序</button>
+      <button data-f="security">安全</button>
+      <button data-f="game">游戏 / 其他</button>
+    </div>
+    <div class="grid" id="pgrid">
+      <div class="pcard reveal" data-cat="ai">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v3m0 12v3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M3 12h3m12 0h3M5.6 18.4l2.1-2.1m8.6-8.6 2.1-2.1" stroke-linecap="round"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+        <h4>LeetCode 教练 Pro</h4><div class="en4">LEETCODE COACH · PWA + EXTENSION</div>
+        <p>Hot100 个人训练 OS：计划、番茄钟、间隔复习、错因"疫苗"、Readiness 状态评估，数据可导出 Anki / Obsidian / Markdown。v11 迭代到 v20。</p>
+        <div class="chips"><span>PWA</span><span>Chrome 扩展</span><span>Supabase</span></div>
+        <span class="plink none">自研项目 · 本地可运行</span>
+      </div>
+      <div class="pcard reveal" data-cat="web">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></div>
+        <h4>面试学习系统</h4><div class="en4">INTERVIEW STUDY · VUE3 + FASTAPI</div>
+        <p>题库、刷题、AI 评分与简历优化一体化；SQLAlchemy 数据层、Docker 部署、端口管理与一键启动脚本。</p>
+        <div class="chips"><span>Vue3</span><span>FastAPI</span><span>Docker</span></div>
+        <span class="plink none">自研项目 · 本地可运行</span>
+      </div>
+      <div class="pcard reveal" data-cat="mobile">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2" stroke-linecap="round"/></svg></div>
+        <h4>校园失物招领系统</h4><div class="en4">LOST &amp; FOUND · 小程序 + 后台</div>
+        <p>微信小程序 + FastAPI + 后台管理台 + 课程论文：发布、搜索、举报、线索、公告全流程，SQLite/MySQL 双库。</p>
+        <div class="chips"><span>微信小程序</span><span>FastAPI</span><span>管理台</span></div>
+        <span class="plink none">自研项目 · 含论文</span>
+      </div>
+      <div class="pcard reveal" data-cat="mobile">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12l-4-3H6a2 2 0 0 1-2-2V5z"/><path d="M9 8h6M9 11h4" stroke-linecap="round"/></svg></div>
+        <h4>中医医案记录系统</h4><div class="en4">TCM CASES · UNI-APP + UNICLOUD</div>
+        <p>uni-app/Vue3 多端 + uniCloud 云函数：AI 研究助手、标签体系、专题沉淀、PDF 导出，v1 迭代到 v3.7。</p>
+        <div class="chips"><span>uni-app</span><span>uniCloud</span><span>AI / PDF</span></div>
+        <span class="plink none">自研项目 · 多端</span>
+      </div>
+      <div class="pcard reveal" data-cat="ai">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l2.1 5.2L19.5 9l-4.2 3.6L16.8 18 12 15l-4.8 3 1.5-5.4L4.5 9l5.4-.8L12 3z" stroke-linejoin="round"/></svg></div>
+        <h4>塔罗牌 AI</h4><div class="en4">TAROT AI · VUE3</div>
+        <p>Vue3 + Vite + Pinia 的 AI 占卜前端，流式对话与牌阵交互，练习大模型对话产品的体验设计。</p>
+        <div class="chips"><span>Vue3</span><span>Pinia</span><span>LLM</span></div>
+        <span class="plink none">自研项目</span>
+      </div>
+      <div class="pcard reveal" data-cat="mobile">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h16v11H4z"/><path d="M9 20h6M12 16v4" stroke-linecap="round"/></svg></div>
+        <h4>英语学习 App</h4><div class="en4">ENGLISH APP · SPRING BOOT + FLUTTER</div>
+        <p>Spring Boot + Redis 后端与 Flutter 移动端，练习移动端与传统 Java 后端的完整协作。</p>
+        <div class="chips"><span>Flutter</span><span>Spring Boot</span><span>Redis</span></div>
+        <span class="plink none">课程实践</span>
+      </div>
+      <div class="pcard reveal" data-cat="game">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2.5" y="8" width="19" height="10" rx="4"/><path d="M7 11.5v3M5.5 13h3M15 12.5h.01M17.5 14.5h.01" stroke-linecap="round"/></svg></div>
+        <h4>Ember Valley / 同一屋檐下</h4><div class="en4">GODOT 4 · GDSCRIPT</div>
+        <p>两款 Godot 独立游戏原型：JSON 配置驱动 + SQLite + Python 静态校验（200+ 项检查），数据驱动的 NPC 日程与站位系统。原型阶段，未实机验收。</p>
+        <div class="chips"><span>GDScript</span><span>数据驱动</span><span>静态校验</span></div>
+        <span class="plink none">游戏原型 · 诚实标注</span>
+      </div>
+      <div class="pcard reveal" data-cat="mobile">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.4-7 10-7 10z" stroke-linejoin="round"/></svg></div>
+        <h4>饴游味津美食社区</h4><div class="en4">FOOD COMMUNITY · UNI-APP</div>
+        <p>uni-app + uniCloud 美食社区，前台用户端 + admin 后台，练习内容社区的发布、互动与后台治理。</p>
+        <div class="chips"><span>uni-app</span><span>uniCloud</span><span>admin</span></div>
+        <span class="plink none">早期项目</span>
+      </div>
+      <div class="pcard reveal" data-cat="security">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3z" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h4>网络安全综合实验</h4><div class="en4">SECURITY LABS</div>
+        <p>覆盖 Web 安全、网络扫描、流量分析的课程实验合集，使用 Burp、Nmap、Wireshark 等工具，打牢安全基本功。</p>
+        <div class="chips"><span>Web 安全</span><span>Burp/Nmap</span><span>流量分析</span></div>
+        <span class="plink none">课程实验</span>
+      </div>
+      <div class="pcard reveal" data-cat="web">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5z"/><path d="M8 3v18M4 9h4" stroke-linecap="round"/></svg></div>
+        <h4>个人技术博客</h4><div class="en4">HEXO BLOG · CI/CD</div>
+        <p>Hexo + Butterfly 主题，GitHub Actions 自动构建部署，自定义域名，持续记录安全与全栈开发笔记。</p>
+        <div class="chips"><span>Hexo</span><span>GitHub Actions</span><span>自定义域名</span></div>
+        <a class="plink" href="https://imcaterpillar.top" target="_blank" rel="noopener">访问 imcaterpillar.top <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="pcard reveal" data-cat="mobile">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h7.6a1.5 1.5 0 0 0 1.5-1.2L21 8H6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h4>小程序商城</h4><div class="en4">UNISHOP · 2024</div>
+        <p>uni-app 电商小程序教学实践，走通商品、购物车、订单、支付链路的前后端，是全栈学习的早期起点。</p>
+        <div class="chips"><span>小程序</span><span>电商</span><span>教学实践</span></div>
+        <span class="plink none">学习项目 · 2024</span>
+      </div>
+      <div class="pcard reveal" data-cat="security">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3z" stroke-linejoin="round"/><path d="M12 8v4M12 14.5h.01" stroke-linecap="round"/></svg></div>
+        <h4>SecGPT 安全大模型研读</h4><div class="en4">OPEN-SOURCE STUDY</div>
+        <p>研读并复现开源安全大模型 SecGPT / secgpt-mini 与 wiseflow 采集框架，作为毕设技术选型依据（非原创，已注明上游）。</p>
+        <div class="chips"><span>SecGPT</span><span>LLaMA-Factory</span><span>开源研读</span></div>
+        <a class="plink" href="https://github.com/UDACA/SecGPT" target="_blank" rel="noopener">查看上游项目 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-index">TECH STACK / 03</span>
+      <h2>技术栈：按熟练度，而不是堆砌名词</h2>
+      <p>高亮为当前主力技术。安全是我的专业底色，AI 工程与全栈开发是我的主攻方向。</p>
+    </div>
+    <div class="stack-grid">
+      <div class="sgroup reveal"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 6L3 12l5 6M16 6l5 6-5 6M13 4l-2 16" stroke-linecap="round" stroke-linejoin="round"/></svg>编程语言</h4><div class="lvl">熟练 / 熟悉 / 了解</div><div class="chip-cloud"><span class="hot">Python</span><span class="hot">TypeScript</span><span class="hot">JavaScript</span><span>Java</span><span>Go</span><span>GDScript</span><span>Dart</span><span>Rust（研读）</span></div></div>
+      <div class="sgroup reveal"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01"/></svg></h4><div class="lvl">前端 · 主力</div><div class="chip-cloud"><span class="hot">React / Next.js</span><span class="hot">Vue3 / Vite</span><span>Tailwind</span><span class="hot">PWA</span><span>Monaco</span><span>Recharts</span><span>Pinia</span></div></div>
+      <div class="sgroup reveal"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></h4><div class="lvl">后端与数据</div><div class="chip-cloud"><span class="hot">FastAPI</span><span>Flask</span><span>SQLAlchemy</span><span class="hot">Postgres / Supabase</span><span>MySQL</span><span>SQLite</span><span>Redis</span><span>Spring Boot</span></div></div>
+      <div class="sgroup reveal"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 12h.01M15 12h.01M9 15h6M9 9h6" stroke-linecap="round"/></svg></h4><div class="lvl">AI / LLM 工程</div><div class="chip-cloud"><span class="hot">LLM API / Agent</span><span>CopilotKit</span><span class="hot">RAG</span><span>LLaMA-Factory 微调</span><span>SSE 流式</span><span>HITL</span><span>TTS / 多模态</span><span>Prompt 评测</span></div></div>
+      <div class="sgroup reveal"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3z" stroke-linejoin="round"/></svg></h4><div class="lvl">网络安全 · 专业底色</div><div class="chip-cloud"><span class="hot">MITRE ATT&amp;CK</span><span>网络空间测绘 FOFA</span><span>蜜罐 HFISH</span><span>SecGPT</span><span>Burp / Nmap</span><span>Wireshark</span><span>CTF / 渗透基础</span></div></div>
+      <div class="sgroup reveal"><h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke-linecap="round" stroke-linejoin="round"/></svg></h4><div class="lvl">工程化与质量</div><div class="chip-cloud"><span class="hot">Git / GitHub Actions</span><span>Docker</span><span>Vitest</span><span>pytest</span><span>Playwright</span><span>pnpm</span><span>Linux</span><span>事件驱动架构</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="approach">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-index">HOW I BUILD / 04</span>
+      <h2>我做工程的六条原则</h2>
+      <p>这些是贯穿所有项目的习惯，也是我希望在面试中被检验的地方。</p>
+    </div>
+    <div class="principles">
+      <div class="principle reveal"><div class="pn">P-01</div><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v11H4z" rx="1"/><path d="M8 20h8M12 16v4" stroke-linecap="round"/><path d="M8 9l2.2 2.2L15 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h4>可复现 / 离线可演示</h4><p>确定性脚本引擎、未配置 Key 自动 mock、随机过程显式 seed。面试现场断网，系统也能端到端跑起来。</p></div>
+      <div class="principle reveal"><div class="pn">P-02</div><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3z" stroke-linejoin="round"/><path d="M12 8v4M12 14.5h.01" stroke-linecap="round"/></svg></div><h4>安全是默认项</h4><p>密钥只在服务端、.env 不入库、最小权限；高风险动作走人工授权；演示一律用合成/模拟数据，工具仅限授权环境。</p></div>
+      <div class="principle reveal"><div class="pn">P-03</div><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 11l3 3 8-8" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8" stroke-linecap="round"/></svg></div><h4>测试与质量门</h4><p>pytest / Vitest / Playwright、tsc 类型门、Python 静态校验、CI；数据先校验再入引擎，不把脏数据喂给系统。</p></div>
+      <div class="principle reveal"><div class="pn">P-04</div><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h10" stroke-linecap="round"/><circle cx="18" cy="17" r="2.4"/></svg></div><h4>真实闭环，不做玩具</h4><p>真实数据库、真实打卡、真实使用：为自己的训练、刷题、内容生产解决问题，dogfooding 驱动迭代。</p></div>
+      <div class="principle reveal"><div class="pn">P-05</div><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" stroke-linejoin="round"/><path d="M9 12h6" stroke-linecap="round"/></svg></div><h4>工程化与文档</h4><p>src/tests/docs 分层、一键启动脚本、版本备份与回滚、README 与 Checkpoint 记录，让项目三个月后还能跑、能交接。</p></div>
+      <div class="principle reveal"><div class="pn">P-06</div><div class="pi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4v3M12 17v3M4 12h3M17 12h3" stroke-linecap="round"/><circle cx="12" cy="12" r="4"/></svg></div><h4>诚实的 AI 协作</h4><p>透明使用 AI 辅助编码，但架构决策、验证与结果由我负责；提交历史真实、不回填，哪些是 AI 写的、哪些是我定的，分得清。</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-index">ABOUT / 05</span>
+      <h2>关于我：安全背景出身的 AI 全栈开发者</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <h3>姚俊豪</h3>
+        <div class="role">ImCaterpillar · AI 应用 / 全栈 / 安全开发</div>
+        <p>网络空间安全专业出身，却把大部分时间花在"把东西真正做出来"上。喜欢在安全、AI 与工程的交叉地带做完整系统：从数据模型、后端、前端到测试部署一个人闭环。</p>
+        <div class="kv"><span>教育背景</span><b>广州大学 · 网络空间安全（本科）</b></div>
+        <div class="kv"><span>求职方向</span><b>AI 应用 / 全栈 / 安全开发</b></div>
+        <div class="kv"><span>所在城市</span><b>广州 · 可到岗 / 可远程</b></div>
+        <div class="kv"><span>技术博客</span><b>imcaterpillar.top</b></div>
+        <div class="kv"><span>GitHub</span><b>github.com/ImCaterpillar</b></div>
+      </div>
+      <div class="timeline reveal">
+        <div class="tl-item"><div class="tl-when">2024</div><div class="tl-axis"><span class="tl-dot"></span></div><div class="tl-body"><h4>全栈与移动端起步</h4><p>小程序商城（uni-app）、Spring Boot + Flutter 英语 App，走通前后端与移动端协作。</p></div></div>
+        <div class="tl-item"><div class="tl-when">2025 上半年</div><div class="tl-axis"><span class="tl-dot"></span></div><div class="tl-body"><h4>FastAPI + 现代前端系列</h4><p>失物招领、中医医案、美食社区、面试学习系统等多端全栈项目，建立工程化与一键部署习惯。</p></div></div>
+        <div class="tl-item"><div class="tl-when">2025 下半年</div><div class="tl-axis"><span class="tl-dot"></span></div><div class="tl-body"><h4>毕业设计：网安科普大模型问答</h4><p>SecGPT 领域微调 + wiseflow 采集 + RAG + FastAPI/Gradio，独立完成全链路、论文与答辩。</p></div></div>
+        <div class="tl-item"><div class="tl-when">2026 上半年</div><div class="tl-axis"><span class="tl-dot"></span></div><div class="tl-body"><h4>AI 助学 / 自动化矩阵</h4><p>AlgoStudy、LeetCode 教练、算法视频工坊、半马训练 OS、RiskForge，集中打磨可复现与测试体系。</p></div></div>
+        <div class="tl-item now"><div class="tl-when">2026.09</div><div class="tl-axis"><span class="tl-dot"></span></div><div class="tl-body"><h4>AI Agent × 安全：SYSTEMWIRE</h4><p>对话式安全智能体，HITL 授权 + MITRE 杀伤链归因，离线 100% 可复现，50 个测试用例。</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact-sec">
+  <div class="wrap contact reveal">
+    <span class="sec-index" style="display:block;text-align:center;margin-bottom:14px">CONTACT / 06</span>
+    <h2>正在寻找 AI 应用 / 全栈 / 安全开发岗位</h2>
+    <p>如果你在找一个能独立把 LLM 应用从想法做成可运行、可测试、可演示系统的工程师，欢迎看看我的 GitHub，或直接给我发邮件。</p>
+    <div class="contact-actions">
+      <a class="btn btn-primary" href="https://github.com/ImCaterpillar" target="_blank" rel="noopener">访问 GitHub</a>
+      <button class="btn btn-ghost copy-mail" id="copyMail">复制邮箱 2385481062@qq.com</button>
+    </div>
+    <div class="contact-meta">
+      <a href="https://github.com/ImCaterpillar" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5z"/></svg>ImCaterpillar</a>
+      <a href="https://imcaterpillar.top" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>imcaterpillar.top</a>
+      <a class="copy-mail" style="cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6" stroke-linecap="round" stroke-linejoin="round"/></svg>2385481062@qq.com</a>
+    </div>
+  </div>
+</section>
+</main>
+<!-- hidden case detail templates (static content; images stay in src for upload) -->
+<div hidden>
+  <div data-detail="systemwire">
+    <h3>SYSTEMWIRE 内网安全智能体平台</h3><span class="en">CONVERSATIONAL AI SECURITY AGENT · HITL · MITRE ATT&amp;CK</span>
+    <h5>背景与问题</h5><p>对话式安全 Agent 很容易停留在"能聊天、不能落地"：要么直接调用工具带来误操作风险，要么演示依赖外部大模型与网络、现场不可控。我希望做一个能在面试现场<b>断网 100% 复现</b>、且把"人工授权"做成一等公民的安全运营智能体。</p>
+    <h5>我的职责</h5><p>独立完成产品定义、三栏控制台 UI、确定性演示引擎、Agent 运行时编排、HITL 授权流与 50 个测试用例。技术栈 Next.js 15 / React 19 / TypeScript / CopilotKit 1.73。</p>
+    <h5>关键决策与技术取舍</h5><ul>
+      <li><b>确定性演示引擎拦截 OpenAI 兼容接口：</b>用状态机 + SSE 流式逐条产出，脚本驱动资产测绘、蜜点部署、威胁归因；真实 DeepSeek 可用时走真模型，失败自动回退脚本，演示永不中断。</li>
+      <li><b>高风险动作必须 HITL：</b>部署/卸载蜜点弹出授权卡，展示终端命令、利弊、影响评估；端口冲突时给出"换端口 / 停旧实例 / 换 IP / 中止"四方案，Agent 无权自行执行。</li>
+      <li><b>信息分层不重复：</b>AI 只输出 1–2 句结论，明细交给 Artifact 卡片（拓扑、告警、图谱）与右栏控制台（态势、告警队列、置信度），三处各司其职。</li>
+    </ul>
+    <h5>难点与结果</h5><p>难点在于流式状态编排与"自动化程度 vs 可控性"的平衡。最终交付 3 个运营场景（内网体检 / 蜜点部署 / 威胁归因）、12 资产 9 告警的完整剧本、L1–L4 杀伤链 + 四因子置信度（主样本 87%）归因，以及悬浮助手、侧边栏、嵌入式终端、MCP 应用等 10 条路由；50 个 Vitest 用例 + tsc 类型门，离线一键可跑。</p>
+    <div class="modal-gallery">
+      <img class="one" src="assets/img/sw-approval.webp" alt="蜜点部署 HITL 人工授权卡" data-cap="蜜点部署：终端命令 / 利弊 / 影响评估 / 批准拒绝的人工授权卡">
+      <img src="assets/img/sw-asset-report.webp" alt="内网体检报告与资产清单" data-cap="内网体检：12 资产 / 2 高危 / 3 风险 / 1 在线诱饵">
+      <img src="assets/img/sw-confidence.webp" alt="威胁归因置信度与证据时间线" data-cap="威胁归因：87% 综合置信度、四因子、MITRE 技术与证据时间线">
+      <img src="assets/img/sw-attribution.webp" alt="蜜点告警卡与溯源图谱" data-cap="蜜点告警卡 + L1/L2 溯源图谱 + 右栏告警队列">
+      <img src="assets/img/sw-topology.webp" alt="内网资产雷达拓扑" data-cap="内网资产雷达拓扑（CORE / EDGE / ICS / FARM 分区）">
+    </div>
+    <div class="modal-links">
+      <a class="extlink" href="https://github.com/ImCaterpillar/systemwire" target="_blank" rel="noopener">GitHub 源码</a>
+      <span class="extlink muted">本地离线 Demo（npm run dev，无需密钥）</span>
+    </div>
+  </div>
+
+  <div data-detail="halfmarathon">
+    <h3>半程马拉松训练管理 Web App</h3><span class="en">HALF-MARATHON TRAINING OS · NEXT.JS + SUPABASE + PWA</span>
+    <h5>背景与问题</h5><p>为冲击男子半马国家三级标准（1:21:30），我需要一个真正每天用的训练系统：课表、打卡、统计、AI 建议都要可靠，而不是只在演示里出现一次的 demo。</p>
+    <h5>我的职责</h5><p>独立设计 12 张表的数据模型、服务端 API、PWA 前端、离线同步与测试；技术栈 Next.js（App Router）/ TypeScript / Supabase / Tailwind / Vitest + Playwright。</p>
+    <h5>关键决策与技术取舍</h5><ul>
+      <li><b>密钥零暴露：</b>浏览器不直连 Supabase，Service Role Key 与 AI Key 只在服务端；HttpOnly Cookie + 访问码 + 限流，避免匿名公网部署被刷。</li>
+      <li><b>AI 建议可回滚：</b>建议先暂存，用户确认才应用；应用前自动写入 plan_versions 备份，失败由 Postgres RPC 事务整体回滚，不会把课表改坏。</li>
+      <li><b>离线优先：</b>Service Worker + IndexedDB 打卡队列，断网先记、联网补传；PWA 可安装到桌面/手机；提供 bat/cmd/ps1/sh 一键本地脚本。</li>
+    </ul>
+    <h5>难点与结果</h5><p>难点是弱网/离线的数据一致性与 AI 改课表的安全性。最终覆盖 7 个训练阶段 + 12 周逐日计划、5 个 Checkpoint 评审，关键链路有 Vitest 单测与 Playwright 端到端测试，是我自己一直在用的产品。</p>
+    <div class="modal-links"><a class="extlink" href="https://github.com/ImCaterpillar/half-marathon-training" target="_blank" rel="noopener">GitHub 源码</a><span class="extlink muted">需自备 Supabase（提供 .env.example 与初始化脚本）</span></div>
+  </div>
+
+  <div data-detail="algostudy">
+    <h3>AlgoStudy 算法学习平台</h3><span class="en">ALGOSTUDY · FASTAPI + REACT + SPACED REPETITION</span>
+    <h5>背景与问题</h5><p>刷题数量不等于掌握。我想要一个围绕"做题—复盘—间隔复习—弱项消灭"闭环的平台，并在浏览器里就能跑多语言代码。</p>
+    <h5>我的职责</h5><p>独立完成前后端：FastAPI + SQLAlchemy + JWT 后端，React + Vite + Monaco + Recharts 前端，SQLite 本地零配置，GitHub Actions CI。</p>
+    <h5>关键决策与技术取舍</h5><ul>
+      <li><b>浏览器内多语言沙箱：</b>Python / JavaScript / Java / C++ 在页面轻量执行并记录提交与错因，不依赖远程判题机，本地即可演示。</li>
+      <li><b>间隔重复算法：</b>D+1/3/7/14/30 复习节奏 + 掌握度模型 + 弱项标签 + 每日推荐与周报，让"复习什么"由数据决定。</li>
+      <li><b>可演进的数据层：</b>SQLite 启动零配置，旧库自动迁移并保护外键与唯一约束；AI 提供提示与代码审查但不直接代做。</li>
+    </ul>
+    <h5>难点与结果</h5><p>难点是复习调度与掌握度建模、以及本地多语言执行的隔离。最终形成题库路线、模板库、笔记、复习、AI 提示一体的学习闭环，并用 CI 保证每次改动可回归。</p>
+    <div class="modal-links"><a class="extlink" href="https://github.com/ImCaterpillar/algo-study" target="_blank" rel="noopener">GitHub 源码</a><span class="extlink muted">本地一键启动（含演示账号）</span></div>
+  </div>
+
+  <div data-detail="riskforge">
+    <h3>RiskForge 事件驱动量化回测与风险框架</h3><span class="en">RISKFORGE · REPRODUCIBLE EVENT-DRIVEN BACKTESTER</span>
+    <h5>背景与问题</h5><p>在线行情与重型框架让研究环境脆弱、结果难复现。我想做一个离线可装、口径一致、能长期沉淀的个人量化研究底座。</p>
+    <h5>我的职责</h5><p>独立设计事件驱动内核与工程结构：src / tests / examples / docs / data 分层，pyproject 打包，CLI 入口，标准库 unittest。透明使用 AI 辅助编码，提交历史真实、不回填。</p>
+    <h5>关键决策与技术取舍</h5><ul>
+      <li><b>核心零第三方依赖：</b>仅用 Python 标准库，隔离/无网络环境也能安装、运行、测试；只有出图才可选 matplotlib。</li>
+      <li><b>可复现优先：</b>所有随机过程显式 seed，同输入必得同结果；数据先经校验器（OHLC、日期、缺口、停复牌）再进引擎。</li>
+      <li><b>复权口径正确：</b>拆股/分红用后复权因子，复权收益等于含权总收益，除权日不产生人为跳空；M1/M2 里程碑逐项验证。</li>
+    </ul>
+    <h5>难点与结果</h5><p>难点是事件驱动下的时间推进、撮合与复权口径一致性。交付了可复现的合成 GBM 样例数据（非真实标的、非投资建议）、数据校验、调整因子、策略/风控/绩效模块与 CLI，是一个"工程上站得住"的研究框架。</p>
+    <div class="modal-links"><a class="extlink" href="https://github.com/ImCaterpillar/riskforge" target="_blank" rel="noopener">GitHub 源码</a><span class="extlink muted">合成数据 · 仅用于工程研究</span></div>
+  </div>
+
+  <div data-detail="graduation">
+    <h3>基于大模型的网络安全科普问答系统（毕业设计）</h3><span class="en">CAPSTONE · SECGPT FINE-TUNE + WISEFLOW + RAG</span>
+    <h5>背景与问题</h5><p>通用大模型回答网络安全科普问题容易泛泛、缺乏领域知识且可能产生幻觉。课题目标是构建一个"懂安全"、可持续更新知识的科普问答系统。</p>
+    <h5>我的职责</h5><p>在广州大学网络空间安全专业完成本科毕业设计，独立走通"信息采集 → 领域微调 → 知识库检索增强 → Web 演示"全链路，并完成开题、中期、论文与答辩材料。</p>
+    <h5>关键决策与技术取舍</h5><ul>
+      <li><b>领域微调：</b>以开源安全大模型 SecGPT 为基座，使用 LLaMA-Factory 训练 secgpt-mini，使回答贴合网安科普语境。</li>
+      <li><b>采集 + RAG：</b>用 wiseflow 持续汇聚网安科普资料构建知识库，检索增强生成，降低幻觉并支持溯源。</li>
+      <li><b>可演示架构：</b>FastAPI + Gradio 提供前后端，PocketBase 做轻量数据层， Transformers 承载本地模型推理。</li>
+    </ul>
+    <h5>难点与结果</h5><p>难点是领域语料构建、微调成本与检索增强的效果平衡。最终完成可演示系统与完整论文/答辩；其中 SecGPT、secgpt-mini、wiseflow 为开源项目，我做的是选型、微调、集成与应用层，已在材料中明确注明上游、不把开源贡献据为己有。</p>
+    <div class="modal-links"><span class="extlink muted">源码与论文整理中（含模型权重，体积较大，需脱敏后发布）</span><a class="extlink" href="https://github.com/UDACA/SecGPT" target="_blank" rel="noopener">上游 SecGPT</a></div>
+  </div>
+
+  <div data-detail="algovideo">
+    <h3>算法视频工坊</h3><span class="en">ALGO VIDEO STUDIO · FLASK + PLAYWRIGHT MULTIMODAL PIPELINE</span>
+    <h5>背景与问题</h5><p>把一道算法题做成讲解视频，涉及选题、脚本、录屏、配音、字幕、渲染、发布等大量重复劳动。我希望把它沉淀成一条可复用、可重放、可离线演示的生产线。</p>
+    <h5>我的职责</h5><p>独立完成 Web 后台与一体化 worker，迭代到 v48：Python / Flask、Playwright 录屏、TTS、字幕、模板与规则引擎、任务队列与发布计划。</p>
+    <h5>关键决策与技术取舍</h5><ul>
+      <li><b>长流程解耦：</b>任务队列 + 发布计划 + 资产/模板中心 + 规则引擎，单个 worker 串起脚本生成、Playwright 录屏、TTS、字幕与渲染，失败可重放。</li>
+      <li><b>无 Key 也能跑：</b>未配置 OPENAI_API_KEY 时自动切换 mock/本地演示，先保证端到端链路可用——与 SYSTEMWIRE 一致的"可复现"理念。</li>
+      <li><b>工作区可运维：</b>一键备份、孤儿目录检测、过期清理、成果打包 ZIP，start.bat 一键启动。</li>
+    </ul>
+    <h5>难点与结果</h5><p>难点是多阶段任务的编排、录屏/配音的时序对齐与运行产物治理。最终形成从题单到成片的自动化流水线，并在数十次迭代中沉淀了模板、规则与运维工具。</p>
+    <div class="modal-links"><span class="extlink muted">源码整理中（含大量运行产物，需脱敏与瘦身后方可公开发布）</span></div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="案例详情">
+  <div class="modal">
+    <div class="modal-bar"><span class="mt" id="modalTitle">案例详情</span><button class="modal-close" id="modalClose" aria-label="关闭"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true"><img id="lightboxImg" src="" alt="案例截图预览"><div class="lb-cap" id="lightboxCap"></div></div>
+<div class="toast" id="toast"></div>
+<footer class="footer">
+  <div class="wrap">
+    <div class="fl">
+      姚俊豪 · ImCaterpillar — AI 应用 / 全栈 / 安全开发作品集。<br>
+      说明：SYSTEMWIRE 为纯前端模拟的安全智能体，安全工具仅限授权环境使用；RiskForge 使用合成数据，不构成任何投资建议。页面截图均为本地真实运行所得。
+    </div>
+    <div class="fr">© <span id="year"></span> Yao Junhao · Built by hand, no template</div>
+  </div>
+</footer>
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* nav */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 24); };
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  var toggle = document.getElementById('navToggle'), links = document.getElementById('navLinks');
+  toggle.addEventListener('click', function(){ links.classList.toggle('open'); });
+  links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); }); });
+
+  /* scroll reveal */
+  var revEls = document.querySelectorAll('.reveal');
+  if(reduce || !('IntersectionObserver' in window)){
+    revEls.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    revEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* project filter */
+  var filterBtns = document.querySelectorAll('#filters button');
+  var cards = document.querySelectorAll('#pgrid .pcard');
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('on'); });
+      btn.classList.add('on');
+      var f = btn.getAttribute('data-f');
+      cards.forEach(function(c){
+        var show = (f === 'all' || c.getAttribute('data-cat') === f);
+        c.style.display = show ? '' : 'none';
+      });
+    });
+  });
+
+  /* toast */
+  var toast = document.getElementById('toast'), toastTimer;
+  function showToast(msg){
+    toast.textContent = msg; toast.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2200);
+  }
+
+  /* copy email */
+  var MAIL = '2385481062@qq.com';
+  function copyMail(){
+    function ok(){ showToast('邮箱已复制：' + MAIL); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(MAIL).then(ok).catch(fallback);
+    } else { fallback(); }
+    function fallback(){
+      var ta=document.createElement('textarea'); ta.value=MAIL; document.body.appendChild(ta);
+      ta.select(); try{ document.execCommand('copy'); ok(); }catch(e){ showToast(MAIL); }
+      document.body.removeChild(ta);
+    }
+  }
+  document.querySelectorAll('.copy-mail').forEach(function(el){ el.addEventListener('click', copyMail); });
+
+  /* modal */
+  var overlay = document.getElementById('overlay'), modalBody = document.getElementById('modalBody'),
+      modalTitle = document.getElementById('modalTitle');
+  function openCase(id){
+    var tpl = document.querySelector('[data-detail="'+id+'"]');
+    if(!tpl) return;
+    modalTitle.textContent = 'CASE STUDY · ' + id.toUpperCase();
+    modalBody.innerHTML = tpl.innerHTML;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    modalBody.querySelectorAll('img').forEach(function(im){
+      im.addEventListener('click', function(){ openLightbox(im.getAttribute('src'), im.getAttribute('data-cap')||im.alt); });
+    });
+    var links = modalBody.querySelectorAll('.modal-links a[href]');
+    document.getElementById('modalClose').focus();
+  }
+  function closeCase(){ overlay.classList.remove('open'); document.body.style.overflow=''; modalBody.innerHTML=''; }
+  document.querySelectorAll('[data-case]').forEach(function(b){
+    b.addEventListener('click', function(){ openCase(b.getAttribute('data-case')); });
+  });
+  document.getElementById('modalClose').addEventListener('click', closeCase);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeCase(); });
+
+  /* lightbox */
+  var lightbox = document.getElementById('lightbox'), lbImg = document.getElementById('lightboxImg'), lbCap = document.getElementById('lightboxCap');
+  function openLightbox(src, cap){ lbImg.setAttribute('src', src); lbCap.textContent = cap||''; lightbox.classList.add('open'); }
+  function closeLightbox(){ lightbox.classList.remove('open'); lbImg.setAttribute('src',''); }
+  lightbox.addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ if(lightbox.classList.contains('open')){ closeLightbox(); } else if(overlay.classList.contains('open')){ closeCase(); } }
+  });
+
+  /* case 1 thumbnail switch + main image zoom */
+  document.querySelectorAll('.gallery-thumbs img').forEach(function(t){
+    t.addEventListener('click', function(){
+      var visual = t.closest('.case-visual'); if(!visual) return;
+      var main = visual.querySelector('.frame img');
+      main.setAttribute('src', t.getAttribute('data-full'));
+      visual.querySelectorAll('.gallery-thumbs img').forEach(function(x){ x.classList.remove('on'); });
+      t.classList.add('on');
+    });
+  });
+  document.querySelectorAll('.case-visual .frame img').forEach(function(im){
+    im.style.cursor = 'zoom-in';
+    im.addEventListener('click', function(){ openLightbox(im.getAttribute('src'), im.alt); });
+  });
+})();
+</script>
+</body>
+</html>
