@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          playwright install chromium
+
+      - name: HTML basic validation
+        run: |
+          python -c "
+          import pathlib, sys
+          html = pathlib.Path('index.html').read_text(encoding='utf-8')
+          checks = [
+            ('<!DOCTYPE html>', html.startswith('<!DOCTYPE html>')),
+            ('lang=zh-CN', 'lang=\"zh-CN\"' in html),
+            ('title', '<title>' in html and '</title>' in html),
+            ('meta description', 'name=\"description\"' in html),
+            ('JSON-LD Person', 'application/ld+json' in html and '\"@type\":\"Person\"' in html),
+            ('OG image', 'og:image' in html),
+            ('Twitter card', 'twitter:card' in html),
+            ('canonical', 'rel=\"canonical\"' in html),
+            ('no imcaterpillar.top dead link', 'imcaterpillar.top' not in html),
+            ('lab console', 'id=\"labRun\"' in html),
+            ('HITL approve', 'id=\"labApprove\"' in html),
+            ('HITL deny', 'id=\"labDeny\"' in html),
+            ('skip link', 'skip-link' in html),
+            ('robots.txt', pathlib.Path('robots.txt').exists()),
+            ('sitemap.xml', pathlib.Path('sitemap.xml').exists()),
+          ]
+          ok = True
+          for name, passed in checks:
+              print(f'  {\"PASS\" if passed else \"FAIL\"} {name}')
+              ok = ok and passed
+          sys.exit(0 if ok else 1)
+          "
+
+      - name: Playwright functional test
+        run: |
+          python -c "
+          import pathlib, sys
+          from playwright.sync_api import sync_playwright
+          url = pathlib.Path('index.html').resolve().as_uri()
+          errs = []
+          with sync_playwright() as p:
+              b = p.chromium.launch()
+              pg = b.new_page(viewport={'width':1440,'height':900})
+              pg.on('console', lambda m: errs.append(m.text) if m.type=='error' else None)
+              pg.goto(url, wait_until='domcontentloaded')
+              pg.wait_for_timeout(500)
+              # 体检
+              pg.click('#labRun'); pg.wait_for_timeout(3000)
+              assert pg.text_content('#labStatus') == 'done', 'survey not done'
+              # 蜜点授权
+              pg.click('.lab-scn [data-scn=\"honeypot\"]'); pg.click('#labRun')
+              pg.wait_for_timeout(1200)
+              assert pg.is_visible('#labHitl'), 'HITL not shown'
+              pg.click('#labApprove'); pg.wait_for_timeout(1600)
+              assert pg.eval_on_selector_all('#rs-chain .lc.on','e=>e.length') >= 1
+              # 归因
+              pg.click('.lab-scn [data-scn=\"attrib\"]'); pg.click('#labRun')
+              pg.wait_for_timeout(5000)
+              assert pg.eval_on_selector_all('#rs-chain .lc.on','e=>e.length') == 4
+              assert pg.text_content('#rs-conf') == '87%'
+              # 拒绝
+              pg.click('.lab-scn [data-scn=\"honeypot\"]'); pg.click('#labRun')
+              pg.wait_for_timeout(1200); pg.click('#labDeny'); pg.wait_for_timeout(500)
+              assert pg.text_content('#rs-phase') == '已取消'
+              b.close()
+          assert not errs, f'console errors: {errs}'
+          print('PLAYWRIGHT OK')
+          "

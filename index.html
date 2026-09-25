@@ -18,6 +18,9 @@
 <meta name="twitter:title" content="姚俊豪 · AI 应用 / 全栈 / 安全开发作品集">
 <meta name="twitter:description" content="对话式安全智能体、可复现的 AI 工程、全栈 PWA 与量化风控框架。">
 <meta name="twitter:image" content="https://imcaterpillar.github.io/portfolio/assets/img/og-cover.jpg">
+<link rel="canonical" href="https://imcaterpillar.github.io/portfolio/">
+<meta name="theme-color" content="#070b16">
+<meta name="color-scheme" content="dark">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"姚俊豪","alternateName":"Yao Junhao",
 "url":"https://imcaterpillar.github.io/portfolio/","image":"https://imcaterpillar.github.io/portfolio/assets/img/og-cover.jpg",
@@ -29,7 +32,9 @@
 </script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070b16'/%3E%3Cpath d='M16 4l9 3.5v6.2c0 5.6-3.7 9.4-9 11.3-5.3-1.9-9-5.7-9-11.3V7.5L16 4z' fill='none' stroke='%2337e4d4' stroke-width='1.8' stroke-linejoin='round'/%3E%3Cpath d='M11.5 16.2l3 3 6-6.6' fill='none' stroke='%2337e4d4' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://miaoda.feishu.cn" crossorigin>
-<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap">
+<link rel="preload" as="image" href="assets/img/sw-approval.webp" fetchpriority="high">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"></noscript>
 <style>
 :root{
   --bg:#070b16; --bg-2:#0a1120; --panel:#0d1626; --panel-2:#111d31;
@@ -418,7 +423,7 @@ section{padding:84px 0;position:relative}
       <a href="#about">关于</a>
       <a class="nav-cta" href="https://github.com/ImCaterpillar" target="_blank" rel="noopener">GitHub</a>
     </nav>
-    <button class="nav-toggle" id="navToggle" aria-label="菜单"><span></span><span></span><span></span></button>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -449,7 +454,7 @@ section{padding:84px 0;position:relative}
     <div class="hero-visual">
       <div class="frame" id="heroFrame">
         <div class="frame-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">systemwire · 内网安全智能体平台 / 02 蜜点部署</span></div>
-        <img src="assets/img/sw-approval.webp" alt="SYSTEMWIRE 蜜点部署的人工授权（HITL）界面" loading="eager">
+        <img src="assets/img/sw-approval.webp" alt="SYSTEMWIRE 蜜点部署的人工授权（HITL）界面" width="1130" height="856" fetchpriority="high" decoding="async">
       </div>
       <div class="hero-badge">
         <div class="t">AGENT READY · 离线可复现</div>
@@ -528,15 +533,15 @@ section{padding:84px 0;position:relative}
       <div class="case-visual">
         <div class="frame">
           <div class="frame-bar"><i class="r"></i><i class="y"></i><i class="g"></i><span class="url">systemwire / threat-attribution</span></div>
-          <img src="assets/img/sw-attribution.webp" alt="SYSTEMWIRE 威胁归因：蜜点告警卡与 MITRE ATT&CK 溯源图谱" loading="lazy">
+          <img src="assets/img/sw-attribution.webp" alt="SYSTEMWIRE 威胁归因：蜜点告警卡与 MITRE ATT&CK 溯源图谱" width="1130" height="856" loading="lazy" decoding="async">
         </div>
         <div class="cap"><span>SYSTEMWIRE · 三栏 SOC 控制台（真实运行截图）</span><span class="zoom" data-case="systemwire">查看 5 张截图</span></div>
         <div class="gallery-thumbs">
-          <img class="on" src="assets/img/sw-attribution.webp" alt="威胁归因" data-full="assets/img/sw-attribution.webp">
-          <img src="assets/img/sw-asset-report.webp" alt="内网体检" data-full="assets/img/sw-asset-report.webp">
-          <img src="assets/img/sw-approval.webp" alt="人工授权" data-full="assets/img/sw-approval.webp">
-          <img src="assets/img/sw-confidence.webp" alt="置信度研判" data-full="assets/img/sw-confidence.webp">
-          <img src="assets/img/sw-topology.webp" alt="资产拓扑" data-full="assets/img/sw-topology.webp">
+          <img class="on" src="assets/img/sw-attribution.webp" alt="威胁归因" data-full="assets/img/sw-attribution.webp" width="64" height="44" loading="lazy" decoding="async">
+          <img src="assets/img/sw-asset-report.webp" alt="内网体检" data-full="assets/img/sw-asset-report.webp" width="64" height="44" loading="lazy" decoding="async">
+          <img src="assets/img/sw-approval.webp" alt="人工授权" data-full="assets/img/sw-approval.webp" width="64" height="44" loading="lazy" decoding="async">
+          <img src="assets/img/sw-confidence.webp" alt="置信度研判" data-full="assets/img/sw-confidence.webp" width="64" height="44" loading="lazy" decoding="async">
+          <img src="assets/img/sw-topology.webp" alt="资产拓扑" data-full="assets/img/sw-topology.webp" width="64" height="44" loading="lazy" decoding="async">
         </div>
       </div>
       <div class="case-body">
@@ -958,11 +963,11 @@ section{padding:84px 0;position:relative}
     <h5>难点与结果</h5><p>难点在于流式状态编排与"自动化程度 vs 可控性"的平衡。最终交付 3 个运营场景（内网体检 / 蜜点部署 / 威胁归因）、12 资产 9 告警的完整剧本、L1–L4 杀伤链 + 四因子置信度（主样本 87%）归因，以及悬浮助手、侧边栏、嵌入式终端、MCP 应用等 10 条路由；50 个 Vitest 用例 + tsc 类型门，离线一键可跑。</p>
     <h5>评估方法与成本</h5><p>质量基线由 <b>50 个 Vitest 断言 + tsc 类型门</b>构成，3 个确定性场景可反复回放、断网结果一致，用于在改动后第一时间发现回归；默认走离线确定性引擎（<b>0 token、无外部调用</b>），真实模型不可用时自动回退，每一步都有结构化事件留痕，可在页面上方的交互控制台亲手试跑。</p>
     <div class="modal-gallery">
-      <img class="one" src="assets/img/sw-approval.webp" alt="蜜点部署 HITL 人工授权卡" data-cap="蜜点部署：终端命令 / 利弊 / 影响评估 / 批准拒绝的人工授权卡">
-      <img src="assets/img/sw-asset-report.webp" alt="内网体检报告与资产清单" data-cap="内网体检：12 资产 / 2 高危 / 3 风险 / 1 在线诱饵">
-      <img src="assets/img/sw-confidence.webp" alt="威胁归因置信度与证据时间线" data-cap="威胁归因：87% 综合置信度、四因子、MITRE 技术与证据时间线">
-      <img src="assets/img/sw-attribution.webp" alt="蜜点告警卡与溯源图谱" data-cap="蜜点告警卡 + L1/L2 溯源图谱 + 右栏告警队列">
-      <img src="assets/img/sw-topology.webp" alt="内网资产雷达拓扑" data-cap="内网资产雷达拓扑（CORE / EDGE / ICS / FARM 分区）">
+      <img class="one" src="assets/img/sw-approval.webp" alt="蜜点部署 HITL 人工授权卡" data-cap="蜜点部署：终端命令 / 利弊 / 影响评估 / 批准拒绝的人工授权卡" width="1130" height="856" loading="lazy" decoding="async">
+      <img src="assets/img/sw-asset-report.webp" alt="内网体检报告与资产清单" data-cap="内网体检：12 资产 / 2 高危 / 3 风险 / 1 在线诱饵" width="1280" height="960" loading="lazy" decoding="async">
+      <img src="assets/img/sw-confidence.webp" alt="威胁归因置信度与证据时间线" data-cap="威胁归因：87% 综合置信度、四因子、MITRE 技术与证据时间线" width="1130" height="856" loading="lazy" decoding="async">
+      <img src="assets/img/sw-attribution.webp" alt="蜜点告警卡与溯源图谱" data-cap="蜜点告警卡 + L1/L2 溯源图谱 + 右栏告警队列" width="1130" height="856" loading="lazy" decoding="async">
+      <img src="assets/img/sw-topology.webp" alt="内网资产雷达拓扑" data-cap="内网资产雷达拓扑（CORE / EDGE / ICS / FARM 分区）" width="1280" height="960" loading="lazy" decoding="async">
     </div>
     <div class="modal-links">
       <a class="extlink" href="https://github.com/ImCaterpillar/systemwire" target="_blank" rel="noopener">GitHub 源码</a>
@@ -1061,11 +1066,12 @@ section{padding:84px 0;position:relative}
 
   /* nav */
   var nav = document.getElementById('nav');
-  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 24); };
+  var navTicking = false;
+  var onScroll = function(){ if(!navTicking){ requestAnimationFrame(function(){ nav.classList.toggle('scrolled', window.scrollY > 24); navTicking=false; }); navTicking=true; } };
   window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
   var toggle = document.getElementById('navToggle'), links = document.getElementById('navLinks');
-  toggle.addEventListener('click', function(){ links.classList.toggle('open'); });
-  links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); }); });
+  toggle.addEventListener('click', function(){ var open = links.classList.toggle('open'); toggle.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+  links.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ links.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }); });
 
   /* scroll reveal */
   var revEls = document.querySelectorAll('.reveal');
@@ -1269,8 +1275,9 @@ section{padding:84px 0;position:relative}
 
   /* progress + scrollspy */
   var progress=document.getElementById('progress');
-  function onScroll(){ var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
-    progress.style.width=(max>0?(h.scrollTop/max)*100:0)+'%'; }
+  var progTicking=false;
+  function onScroll(){ if(!progTicking){ requestAnimationFrame(function(){ var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+    progress.style.width=(max>0?(h.scrollTop/max)*100:0)+'%'; progTicking=false; }); progTicking=true; } }
   window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
   var navLinks=document.querySelectorAll('.nav-links a[href^="#"]'), map={};
